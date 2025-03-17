@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
+import { Actor, Genre } from './'
 
 export type MovieRequired = {
     title: string
@@ -8,9 +9,9 @@ export type MovieRequired = {
 
 export type MovieOptional = {
     movieId: string
-    actors: string[]
+    actors: Actor[]
     poster: string
-    genre: string
+    genre: Genre
     director: string
     plot: string
     trailer: string
@@ -28,9 +29,9 @@ export class Movie {
     private title: string
     private releaseYear: number
     private duration: number
-    private actors: string[]
+    private actors: Actor[]
     private poster: string
-    private genre: string
+    private genre: Genre
     private director: string
     private plot: string
     private trailer: string
@@ -39,6 +40,12 @@ export class Movie {
     private deletedAt: Date | undefined
 
     constructor(props: MovieProps) {
+        if (props.title.length < 3) throw new Error('Title must be at least 3 characters long')
+        if (props.releaseYear < 1895) throw new Error('Release year must be greater than 1895')
+        if (props.duration < 1) throw new Error('Duration must be greater than 0')
+        if (props.actors && props.actors.length < 1) throw new Error('At least one actor is required')
+        if (props.poster && props.poster.length < 3) throw new Error('Poster must be at least 3 characters long')
+
         Object.assign(this, props)
 
         if (!props.createdAt) this.createdAt = new Date()
@@ -68,7 +75,12 @@ export class Movie {
     }
 
     update(props: MovieUpdate) {
-        Object.assign(this, props)
+        const filteredProps = Object.entries(props)
+            .filter(([_, value]) => value !== undefined)
+            .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
+
+
+        Object.assign(this, filteredProps)
         this.updatedAt = new Date()
     }
 }

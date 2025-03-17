@@ -1,5 +1,6 @@
 import express from "express"
 import cors from "cors"
+import { movieRouter } from "./module/presentation"
 
 class App {
     readonly app = express()
@@ -12,6 +13,8 @@ class App {
 
     private mountMiddlewaresCommon() {
         this.app.use(cors())
+        this.app.use(express.json())
+        this.app.use(express.urlencoded({ extended: true }))
     }
 
     private mountRoutes() {
@@ -19,9 +22,7 @@ class App {
             response.send("Hello World")
         })
 
-        this.app.get("/spanish", (request, response) => {
-            response.send("Hola Mundo")
-        })
+        this.app.use("/movie", movieRouter)
     }
 
     private mountRoutesHealthcheck() {

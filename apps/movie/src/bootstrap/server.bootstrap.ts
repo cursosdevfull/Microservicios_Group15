@@ -1,8 +1,11 @@
 import { Application } from "express";
 import http from "http"
+import { Bootstrap } from "./bootstrap";
 
-export class ServerBootstrap {
-    constructor(private readonly app: Application) { }
+export class ServerBootstrap extends Bootstrap {
+    constructor(private readonly app: Application) {
+        super()
+    }
 
     initialize(): Promise<string | NodeJS.ErrnoException> {
         return new Promise((resolve, reject) => {

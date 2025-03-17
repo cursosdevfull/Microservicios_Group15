@@ -1,0 +1,1 @@
+export { MovieAdapter } from './movie.adapter'

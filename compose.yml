@@ -1,0 +1,31 @@
+services:
+  server-mysql:
+    image: mysql:8
+    container_name: server-mysql
+    ports:
+      - "3306:3306"
+    env_file:
+      - ./mysql/config/.env
+    # environment:
+    #   MYSQL_ROOT_PASSWORD: 12345
+    #   MYSQL_USER: user
+    #   MYSQL_PASSWORD: 12345
+    #   MYSQL_DATABASE: db
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+    networks:
+      - net-ms
+
+  client-mysql:
+    image: phpmyadmin:latest
+    container_name: client-mysql
+    ports:
+      - "8080:80"
+    environment:
+      - PMA_ARBITRARY=1
+    networks:
+      - net-ms
+
+networks:
+  net-ms:
+    driver: bridge

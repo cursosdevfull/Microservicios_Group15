@@ -1,0 +1,39 @@
+### Get all movies
+GET http://localhost:4000/movie
+
+### Get movie by id
+GET http://localhost:4000/movie/40b1dee4-820f-4b35-8a9f-edeba61ba9fb
+
+### Create movie
+POST http://localhost:4000/movie
+Content-Type: application/json
+
+{
+  "title": "The Shawshank Redemption",
+  "releaseYear": 1994,
+  "duration": 142,
+  "actors": [
+    {
+      "name": "Tim Robbins",
+      "birthPlace": "USA"
+    },
+    {
+      "name": "Morgan Freeman",
+      "birthPlace": "USA"
+    }
+  ]
+}
+
+### Update movie
+PUT http://localhost:4000/movie/83b7df67-8dab-4c7a-a3bf-bb56c0a67278
+Content-Type: application/json
+
+{
+  "duration": 300
+}
+
+### Delete movie
+DELETE http://localhost:4000/movie/83b7df67-8dab-4c7a-a3bf-bb56c0a67278
+
+### Get by page
+GET http://localhost:4000/movie/page?page=1&limit=10

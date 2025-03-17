@@ -8,6 +8,8 @@
         "outDir": "./dist",
         "forceConsistentCasingInFileNames": true,
         "skipLibCheck": true,
-        "baseUrl": "./"
+        "baseUrl": "./",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
     }
 }
