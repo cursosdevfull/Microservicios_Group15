@@ -1,5 +1,5 @@
-import { DataSource } from "typeorm";
+import type { DataSource } from "typeorm";
 
 export abstract class Bootstrap {
-    abstract initialize(): Promise<string | NodeJS.ErrnoException | DataSource>
+  abstract initialize(): Promise<string | NodeJS.ErrnoException | DataSource>;
 }

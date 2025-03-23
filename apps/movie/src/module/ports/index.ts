@@ -1,1 +1,1 @@
-export { MoviePort } from "./movie.port"
+export { MoviePort } from "./movie.port";

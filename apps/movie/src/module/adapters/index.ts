@@ -1,1 +1,1 @@
-export { MovieAdapter } from './movie.adapter'
+export { MovieAdapter } from "./movie.adapter";

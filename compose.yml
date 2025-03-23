@@ -6,11 +6,11 @@ services:
       - "3306:3306"
     env_file:
       - ./mysql/config/.env
-    # environment:
-    #   MYSQL_ROOT_PASSWORD: 12345
-    #   MYSQL_USER: user
-    #   MYSQL_PASSWORD: 12345
-    #   MYSQL_DATABASE: db
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
     volumes:
       - ./mysql/data:/var/lib/mysql
     networks:
@@ -26,6 +26,42 @@ services:
     networks:
       - net-ms
 
+  server-rabbitmq:
+    image: rabbitmq:management-alpine
+    container_name: server-rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - net-ms
+
+  movie:
+    image: movie
+    build:
+      context: ./apps/movie
+      dockerfile: Dockerfile
+    container_name: movie
+    ports:
+      - "4500:3000"
+    env_file:
+      - ./config/database.env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/healthcheck"]
+      interval: 10s
+      timeout: 5s
+      retries: 2
+    networks:
+      - net-ms   
+    depends_on:
+      server-mysql:
+        condition: service_healthy
+
 networks:
   net-ms:
     driver: bridge
+    name: net-ms

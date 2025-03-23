@@ -1,34 +1,37 @@
-import { Application } from "express";
-import http from "http"
+import http from "http";
+import type { Application } from "express";
 import { Bootstrap } from "./bootstrap";
+import { env } from '../env';
+
 
 export class ServerBootstrap extends Bootstrap {
-    constructor(private readonly app: Application) {
-        super()
-    }
+  constructor(private readonly app: Application) {
+    super();
+  }
 
-    initialize(): Promise<string | NodeJS.ErrnoException> {
-        return new Promise((resolve, reject) => {
-            const server = http.createServer(this.app)
+  initialize(): Promise<string | NodeJS.ErrnoException> {
+    return new Promise((resolve, reject) => {
+      const server = http.createServer(this.app);
 
-            server.listen(4000, "0.0.0.0")
-                .on("listening", () => resolve("Server is running on port 4000"))
-                .on("error", (error: NodeJS.ErrnoException) => {
-                    if (error.syscall !== "listen") {
-                        reject(error)
-                    }
+      server
+        .listen(env.PORT)
+        .on("listening", () => resolve(`Server is running on port ${env.PORT}`))
+        .on("error", (error: NodeJS.ErrnoException) => {
+          if (error.syscall !== "listen") {
+            reject(error);
+          }
 
-                    switch (error.code) {
-                        case "EACCES":
-                            reject("Port 3000 requires elevated privileges")
-                            break
-                        case "EADDRINUSE":
-                            reject("Port 3000 is already in use")
-                            break
-                        default:
-                            reject(error)
-                    }
-                })
-        })
-    }
+          switch (error.code) {
+            case "EACCES":
+              reject(`Port ${env.PORT} requires elevated privileges`);
+              break;
+            case "EADDRINUSE":
+              reject(`Port ${env.PORT} is already in use`);
+              break;
+            default:
+              reject(error);
+          }
+        });
+    });
+  }
 }
