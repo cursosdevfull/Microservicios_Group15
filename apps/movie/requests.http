@@ -5,7 +5,7 @@ GET http://localhost:4000/movie
 GET http://localhost:4000/movie/40b1dee4-820f-4b35-8a9f-edeba61ba9fb
 
 ### Create movie
-POST http://localhost:4000/movie
+POST http://localhost:4300/movie
 Content-Type: application/json
 
 {

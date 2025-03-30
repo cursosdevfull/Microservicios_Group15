@@ -3,7 +3,9 @@ import { Movie, type MovieApplication } from "../application";
 import { MovieRequestDto } from "./dtos/movie-request.dto";
 
 export class MovieController {
-  constructor(private readonly application: MovieApplication) { }
+  constructor(private readonly application: MovieApplication) {
+
+  }
 
   async create(request: Request, response: Response) {
     const props = new MovieRequestDto(request.body).properties();

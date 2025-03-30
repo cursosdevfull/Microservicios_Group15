@@ -1,12 +1,20 @@
+import type { ConsumeMessage } from "amqplib";
 import type { Movie } from ".";
 import type { MoviePort } from "../ports";
 import type { MovieUpdate } from "./movie";
 
 export class MovieApplication {
-  constructor(private readonly port: MoviePort) {}
+  static instance: MovieApplication
+
+  constructor(private readonly port: MoviePort) {
+    if (!MovieApplication.instance) {
+      MovieApplication.instance = this;
+    }
+  }
 
   async create(movie: Movie) {
-    return this.port.save(movie);
+    const movieCreated = await this.port.save(movie);
+    await this.port.sentNotification(movieCreated);
   }
 
   async update(movieId: string, props: MovieUpdate) {
@@ -38,5 +46,11 @@ export class MovieApplication {
 
   async getByPage(page: number, limit: number) {
     return this.port.getByPage(page, limit);
+  }
+
+  async listenNotification() {
+    this.port.receiveNotification((message: ConsumeMessage) => {
+      console.log("Received message:", message.content.toString());
+    });
   }
 }

@@ -1,7 +1,9 @@
 import cors from "cors";
 import express from "express";
-import { movieRouter } from "./module/presentation";
 import { DatabaseBootstrap } from "./bootstrap";
+import { databaseHealthcheck } from "./core/healthchecks/database.healthcheck";
+import { rabbitmqHealthcheck } from "./core/healthchecks/rabbitmq.healthcheck";
+import { movieRouter } from "./module/presentation";
 
 const startTime = Date.now();
 
@@ -30,13 +32,21 @@ class App {
 
   private mountRoutesHealthcheck() {
     this.app.get("/healthcheck", async (_request, response) => {
-      try {
-        await DatabaseBootstrap.dataSource.manager.query("SELECT 1");
-        response.status(200).send("OK");
-      } catch (error) {
-        console.error("Healthcheck failed:", error);
-        response.status(500).send("KO");
-      }
+      const healthchecks = [
+        databaseHealthcheck(),
+        //rabbitmqHealthcheck()
+      ]
+      const results = await Promise.allSettled(healthchecks);
+
+      const successChecks = results.filter(result => result.status === "fulfilled");
+      const successReasons = successChecks.map(result => result.value);
+
+      const failedChecks = results.filter(result => result.status === "rejected")
+      const failedReasons = failedChecks.map(result => JSON.parse(result.reason.message));
+
+      const statusHealthcheck = successChecks.length === results.length ? 200 : 500;
+
+      response.status(statusHealthcheck).json([...successReasons, ...failedReasons]);
     });
   }
 }

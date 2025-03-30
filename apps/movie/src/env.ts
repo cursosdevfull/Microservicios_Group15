@@ -9,6 +9,11 @@ const envSchema = z.object({
     DB_USER: z.string().default("user"),
     DB_PASS: z.string().default("password"),
     DB_NAME: z.string().default("database"),
+    RABBITMQ_HOST: z.string().default("localhost"),
+    EXCHANGE_NAME: z.string().default("movie"),
+    EXCHANGE_TYPE: z.enum(["topic", "direct", "fanout"]).default("fanout"),
+    EXCHANGE_OPTIONS_DURABLE: z.coerce.boolean().default(true),
+    ROUTING_KEY: z.string().default("movie"),
 });
 
 type EnvSchema = z.infer<typeof envSchema>;
