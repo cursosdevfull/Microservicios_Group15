@@ -14,6 +14,10 @@ const envSchema = z.object({
     EXCHANGE_TYPE: z.enum(["topic", "direct", "fanout"]).default("fanout"),
     EXCHANGE_OPTIONS_DURABLE: z.coerce.boolean().default(true),
     ROUTING_KEY: z.string().default("movie"),
+    KAFKA_BROKER: z.string().default("localhost:9092"),
+    KAFKA_GROUP_ID: z.coerce.number().default(1000),
+    KAFKA_TOPIC_MESSAGE: z.string().default("movie"),
+    CLIENT_ID: z.string().default("movie")
 });
 
 type EnvSchema = z.infer<typeof envSchema>;

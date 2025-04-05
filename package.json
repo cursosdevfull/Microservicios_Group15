@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/cursosdevfull/Microservicios_Group15/issues"
   },
-  "homepage": "https://github.com/cursosdevfull/Microservicios_Group15#readme"
+  "homepage": "https://github.com/cursosdevfull/Microservicios_Group15#readme",
+  "dependencies": {
+    "kafkajs": "^2.2.4"
+  }
 }
