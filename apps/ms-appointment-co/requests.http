@@ -1,0 +1,9 @@
+### Create appointment
+post http://localhost:4010/appointment
+Content-Type: application/json
+
+{
+  "patientId": 5000,
+  "scheduleId": 2,
+  "countryISO": "CO"
+}

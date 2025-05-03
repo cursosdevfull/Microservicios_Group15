@@ -1,0 +1,16 @@
+### Create appointment
+post http://localhost:4080/auth
+Content-Type: application/json
+
+{
+  "email": "jose@email.com",
+  "password": "12345"
+}
+
+###
+post http://localhost:4080/auth/verify
+Content-Type: application/json
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lcyI6Ikpvc8OpIEx1aXMiLCJsYXN0bmFtZSI6IkdvbnrDoWxleiBQw6lyZXoiLCJpYXQiOjE3NDU3MTIzNDUsImV4cCI6MTc0NTcxOTU0NX0.kWAT8Hl3sGqvjtO-sM1WImLIHve6wqG5g1kCnQgPyvU"
+}

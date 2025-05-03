@@ -1,0 +1,37 @@
+{
+  "name": "microservices-appointment",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "publishConfig": {
+    "public": true
+  },
+  "packageManager": "npm@1.1.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "workspaces": [
+    "apps/*",
+    "libs/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "start:dev": "turbo run start:dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cursosdevfull/Microservicios_Group15.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/cursosdevfull/Microservicios_Group15/issues"
+  },
+  "homepage": "https://github.com/cursosdevfull/Microservicios_Group15#readme",
+  "dependencies": {
+    "turbo": "^2.5.0"
+  }
+}

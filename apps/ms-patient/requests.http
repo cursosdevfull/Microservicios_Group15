@@ -1,0 +1,18 @@
+### Create appointment
+post http://localhost:4070/patient
+Content-Type: application/json
+
+{
+  "names": "José Luis",
+  "lastname": "González Pérez",
+  "email": "jose@email.com",
+  "password": "12345",
+  "age": 34,
+  "genre": "MALE"
+}
+
+### 
+get http://localhost:4070/patient/email/jose@email.com
+
+### 
+get http://localhost:4070/patient/id/1

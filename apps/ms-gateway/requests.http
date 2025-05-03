@@ -1,0 +1,33 @@
+### Create appointment
+post http://localhost:4060/api/appointment
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lcyI6Ikpvc8OpIEx1aXMiLCJsYXN0bmFtZSI6IkdvbnrDoWxleiBQw6lyZXoiLCJpYXQiOjE3NDU3MTY4MTUsImV4cCI6MTc0NTcyNDAxNX0.7dOPTeomELbr8ZhhqXmPyGXL4ZgAjped1iHc0CDz7NM
+
+{
+  "patientId": 8000,
+  "scheduleId": 10,
+  "countryISO": "PE"
+}
+
+
+### Create appointment
+post http://localhost:4060/api/patient
+Content-Type: application/json
+
+{
+  "names": "Carlos Alberto",
+  "lastname": "Zegarra",
+  "email": "carlos@email.com",
+  "password": "12345",
+  "age": 34,
+  "genre": "MALE"
+}
+
+###
+post http://localhost:4060/api/auth
+Content-Type: application/json
+
+{
+  "email": "jose@email.com",
+  "password": "12345"
+}
