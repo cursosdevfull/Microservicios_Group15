@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cm-server
+data:
+  port: "5000"
+  environment: dev
+  auth: http://auth.domain.com
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-frontend
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: frontend
+      env: qa
+  template:
+    metadata:
+      labels:
+        app: frontend
+        env: qa
+    spec:
+      containers:
+        - name: app-frontend
+          image: nginx:alpine
+          env:
+            - name: appName
+              value: MyApp
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: cm-server
+                  key: port
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: cm-server
+                  key: environment
+            - name: URL_AUTH
+              valueFrom:
+                configMapKeyRef:
+                  name: cm-server
+                  key: auth                                    

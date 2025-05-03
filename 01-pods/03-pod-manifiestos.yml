@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-nginx
+spec:
+  containers:
+    - name: server-nginx
+      image: nginx:alpine
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-httpd
+spec:
+  containers:
+    - name: server-apache
+      image: httpd:alpine

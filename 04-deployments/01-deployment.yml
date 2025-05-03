@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-backend
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: backend
+      env: qa
+  template:
+    metadata:
+      labels:
+        app: backend
+        env: qa
+    spec:
+      containers:
+        - name: server-1
+          image: python:3.6-alpine
+          command: 
+            [
+              "sh",
+              "-c",
+              "echo 'container1' > index.html && python -m http.server 8081"
+            ]

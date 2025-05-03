@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-frontend-dev
+spec:
+  type: LoadBalancer
+  selector:
+    app: frontend
+    env: dev
+  ports:
+    - port: 3000
+      targetPort: 80
+      protocol: TCP
+      name: port-main
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-nginx-1
+  labels:
+    app: frontend
+    env: dev
+spec:
+  containers:
+    - name: server-nginx
+      image: nginx:alpine
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-nginx-2
+  labels:
+    app: frontend
+    env: dev
+spec:
+  containers:
+    - name: server-nginx
+      image: nginx:alpine
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-nginx-3
+  labels:
+    app: frontend
+    env: dev
+spec:
+  containers:
+    - name: server-nginx
+      image: nginx:alpine
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-nginx-4
+  labels:
+    app: frontend
+    env: dev
+spec:
+  containers:
+    - name: server-nginx
+      image: nginx:alpine                  
